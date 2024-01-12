@@ -1,0 +1,9 @@
+numpy>=1.1.1
+pandas
+pandas_ta
+scipy
+scikit-learn
+sympy
+statsmodels
+pygam
+xgboost
