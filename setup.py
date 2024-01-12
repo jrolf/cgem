@@ -5,7 +5,7 @@ from setuptools import setup, find_packages
 setup(
     # Basic package information:
     name    ='cgem',  
-    version ='0.0.4',
+    version ='0.0.5',
     packages=find_packages(),  # Automatically find packages in the directory
 
     # Dependencies:
