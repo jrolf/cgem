@@ -1,3 +1,6 @@
+
+![CGEM Logo](https://github.com/jrolf/cgem/blob/main/cgem/images/CGEM_LOGO.png)
+
 # Collaborative Generalized Effects Modeling (CGEM): A Comprehensive Overview
 
 ## Introduction

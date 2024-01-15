@@ -2,5 +2,7 @@
 import numpy as np 
 import pandas as pd 
 
-from .models1 import *  
+from .terms  import * 
+from .models import *  
 
+#. 

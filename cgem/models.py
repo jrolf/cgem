@@ -934,7 +934,7 @@ class CGEM:
         es = self.evaluation_string(eq_str1, solve_for, dfname, tvars)
         return eval(es)
 
-    def fit(self, n_epochs=50):
+    def fit(self, n_epochs=50,verbose=False):
         # Creates the initial version of the Transient Effects DataFrame: 
         self.initialize_tdf() # << self.TDF is created.
 
@@ -947,8 +947,8 @@ class CGEM:
         #R2 = max(round(r2_score(actuals, preds), 5), 0.00001)
 
         for epoch_num in range(1,n_epochs+1):
-            if epoch_num % 1 == 0:  # Adjust this condition for controlling the print frequency
-                print(f"\n{'#' * 50}\nLearning Epoch: {epoch_num + 1}")
+            if verbose==True and epoch_num % 1 == 0:  # Adjust this condition for controlling the print frequency
+                print(f"\n{'#' * 50}\nLearning Epoch: {epoch_num}")
 
             # Initial Evaluation
             yhat1 = self.evaluation(self.TrueForm, self.YVar, 'self.TDF', tvars=self.TermList + [self.YVar])
@@ -1014,11 +1014,11 @@ class CGEM:
             }
             self.epoch_logs.append(elog) 
 
-            if epoch_num % 1 == 0:  # Adjust this condition for controlling the print frequency
+            if verbose==True and epoch_num % 1 == 0:  # Adjust this condition for controlling the print frequency
                 print(f"{'-' * 50}\nRMSE 1: {rmse1}\nRMSE 2: {rmse2}\nDELTA: {rmse2 - rmse1}")
                 print(f"RSQ 1: {rsq1}\nRSQ 2: {rsq2}\nDELTA: {rsq2 - rsq1}\n{'-' * 50}")
 
-        print('Done.')
+        print('CGEM model fitting complete. ('+str(epoch_num)+' epochs)')  
 
     def initialize_tdf(self):
         """

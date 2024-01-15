@@ -1,7 +1,8 @@
 README.md
 setup.py
 cgem/__init__.py
-cgem/models1.py
+cgem/models.py
+cgem/terms.py
 cgem.egg-info/PKG-INFO
 cgem.egg-info/SOURCES.txt
 cgem.egg-info/dependency_links.txt
