@@ -1,7 +1,7 @@
 
-![CGEM Logo](https://github.com/jrolf/cgem/blob/main/cgem/images/CGEM_LOGO.png)
+![CGEM Logo](https://github.com/jrolf/cgem/blob/main/images/CGEM_LOGO.png)
 
-# Collaborative Generalized Effects Modeling (CGEM): A Comprehensive Overview
+# Collaborative Generalized Effects Modeling (CGEM) 
 
 ## Introduction
 
@@ -54,25 +54,63 @@ pip show cgem
 Generate artificial data to simulate a causal system:
 
 ```python
-from cgem import *
-import numpy as np
-from random import choice
+import numpy  as np
 import pandas as pd
+from random import choice
+from cgem import *
+
+Task = '''
+Create a simple causal simulation to generate a dataset
+that can be used to conduct a computational proof of CGEM.
+'''
 
 def gen_artificial_data_v1(size=10000):
-    # Generating random values for variables
-    # ... [code truncated for brevity] ...
+    """
+    Generate an artificial dataset representing a causal system.
 
-    return pd.DataFrame({
+    Parameters:
+    size (int): Number of data points to generate.
+
+    Returns:
+    pandas.DataFrame: A DataFrame with the generated data.
+    """
+    global cats,effs
+    # Generating random values for the variables
+    reg_var_a = np.random.normal(10, 3, size)
+    reg_var_b = np.random.normal(12, 4, size)
+    reg_var_c = np.random.normal(15, 5, size)
+
+    # Calculating the effect based on the variables
+    effect_x = 20.0 + (1.0 * reg_var_a) + (1.5 * reg_var_b) + (2.0 * reg_var_c)
+
+    # Defining categories and their corresponding effects
+    cats = list("ABCDEFGHIJ")
+    effs = np.around(np.linspace(0.5, 1.4, len(cats)), 2)
+    cat2effect = {cat: round(eff, 4) for cat, eff in zip(cats, effs)}
+
+    # Generating categorical variable and its effect
+    cat_var_d = np.array([choice(cats) for _ in range(size)])
+    cat_effect_d = np.array([cat2effect[c] for c in cat_var_d])
+
+    # Adding a noise effect
+    noise_effect = np.random.uniform(0.90, 1.10, size)
+
+    # Calculating the target variable
+    target_var_z = ((effect_x) * cat_effect_d) * noise_effect
+
+    # Constructing the dataframe
+    df = pd.DataFrame({
         'TGT_Z': target_var_z,
         'REG_A': reg_var_a,
         'REG_B': reg_var_b,
         'REG_C': reg_var_c,
         'CAT_D': cat_var_d
     })
+    return df
 
-DF1 = gen_artificial_data_v1(size=10000)
-DF2 = gen_artificial_data_v1(size=10000) 
+### Generate Training and Testing Data:
+DF1 = gen_artificial_data_v1(size=10000)  # TRAIN DataFrame
+DF2 = gen_artificial_data_v1(size=10000)  # TEST  DataFrame
 ```
 
 #### Defining the Model Parameters
@@ -80,9 +118,10 @@ DF2 = gen_artificial_data_v1(size=10000)
 Defining the structure, mechanics, and constraints of the model:
 
 ```python
+### DEFINE THE MASTER EFFECTS FORMULA: 
 Formula = "TGT_Z = CAT_D_EFF * LIN_REG_EFF"
 
-# Define terms model parameters
+### DEFINE THE TERM MODEL PARAMETERS:
 tparams = {
     "CAT_D_EFF": {
         'model': "CatRegModel()",  # Categorical Regression Model
@@ -106,12 +145,12 @@ model = CGEM()
 model.load_df(DF1)  
 model.define_form(Formula) 
 model.define_terms(tparams)  
-model.fit(25)
+model.fit(25); 
 ```
 
 #### Model Evaluation
 
-Evaluate model performance:
+Evaluate model performance on the TEST set:
 
 ```python
 preds = model.predict(DF2) 
@@ -125,4 +164,7 @@ print('CrosVal R-Squared:', round(r2, 5))
 CGEM offers a sophisticated framework for data analysis, combining the strengths of various statistical and machine learning methodologies. Its flexibility, coupled with the ability to model complex and non-linear relationships, makes it a valuable tool for data scientists and analysts. The iterative optimization process ensures model robustness, and the emphasis on causal coherence enhances the interpretability of results. CGEM's integration of diverse effects and machine learning models positions it as a versatile tool, suitable for a wide range of applications in data-driven decision-making and advanced data science.
 
 ### Author's Note:
-Thanks for reading this doc! If you have further questions about this library, please message me at "james.rolfsen@think.dev" or connect with me on LinkedIn via https://www.linkedin.com/in/jamesrolfsen/  I am excited to see the many ways people use the CGEM framework in the future. Happy modeling!
+Thanks for reading! If you have further questions about this library, please message me at "james.rolfsen@think.dev" or connect with me on LinkedIn via https://www.linkedin.com/in/jamesrolfsen/  I am excited to see the many ways people use the CGEM framework in the future. Happy modeling!
+
+
+#### [END OF DOC] 
