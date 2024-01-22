@@ -5,7 +5,7 @@ from setuptools import setup, find_packages
 setup(
     # Basic package information:
     name    ='cgem',  
-    version ='0.0.9',
+    version ='0.1.0', 
     packages=find_packages(),  # Automatically find packages in the directory
 
     # Dependencies:
@@ -26,6 +26,7 @@ setup(
     author_email    ='james.rolfsen@think.dev', 
 	description     ='CGEM: Collaborative Generalized Effects Modeling',
 	url             ='https://github.com/jrolf/cgem',    # Link to your repo
+    license         ='MIT',
     
     #long_description=open('README.md').read(),
     #long_description_content_type='text/markdown',  # If your README is in markdown

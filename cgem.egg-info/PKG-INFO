@@ -1,11 +1,11 @@
 Metadata-Version: 1.1
 Name: cgem
-Version: 0.0.9
+Version: 0.1.0
 Summary: CGEM: Collaborative Generalized Effects Modeling
 Home-page: https://github.com/jrolf/cgem
 Author: James A. Rolfsen
 Author-email: james.rolfsen@think.dev
-License: UNKNOWN
+License: MIT
 Description: UNKNOWN
 Platform: UNKNOWN
 Classifier: Programming Language :: Python :: 3.7
